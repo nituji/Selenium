@@ -1,0 +1,14 @@
+package interviewpackage;
+
+public class Interclass {
+	
+	public int a=12;
+		public	int b=13;
+			
+
+
+public static void main(String[] args) {
+	
+	
+	System.out.println("done");
+}}

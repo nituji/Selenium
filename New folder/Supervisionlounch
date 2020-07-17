@@ -1,0 +1,43 @@
+package Supervisionbookingwep;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Supervisionlounch {
+	WebDriver driver;
+	Suploginpage SL;
+	//Flightresultpage FR;
+
+	
+ 
+	@BeforeTest
+	
+	
+	public void launchtest() throws InterruptedException
+	{
+
+		
+			System.setProperty("webdriver.chrome.driver","D:\\eclipse\\jar\\chromedriver.exe");
+			
+			 driver=new ChromeDriver();
+			driver.get("https://bookingwep.com/admin_cpanel/login");				
+			 driver.manage().window().maximize();
+}
+	@Test
+	public void login() throws InterruptedException{
+		
+		SL = new Suploginpage(driver, driver);
+		Thread.sleep(3000);
+		 SL.Suplogin();
+		
+	}
+	@Test
+	public void Supervisionmenulist() throws InterruptedException{
+		SL = new Suploginpage(driver, driver);
+		
+		 SL.menulist();
+	}
+
+}

@@ -1,0 +1,136 @@
+queue:
+  name: Hosted VS2017
+  demands: msbuild
+
+variables:
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'AnyCPU'
+#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references an undefined variable named ‘Parameters.ArtifactName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+steps:
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+    versionSpec: 4.4.1
+
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '$(Parameters.solution)'
+
+  enabled: false
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: 'test/*.sln'
+
+
+- task: MSBuild@1
+  displayName: 'Build solution Test Framework'
+  inputs:
+    solution: test/Tbg.TM.Automation.Web.Test/Tbg.TM.Automation.Web.Test.csproj
+
+    platform: '$(BuildPlatform)'
+
+    configuration: '$(BuildConfiguration)'
+
+  continueOnError: true
+  condition: succeededOrFailed()
+
+- powershell: |
+   # Write your powershell commands here.
+   mkdir .\Tbg.TM.Automation.Web.Test\TestResult
+   
+   .\packages\NUnit.ConsoleRunner.3.9.0\tools\nunit3-console.exe --config Release --result .\Tbg.TM.Automation.Web.Test\TestResult\test-result.xml .\Tbg.TM.Automation.Web.Test\Tbg.TM.Automation.Web.Test.csproj
+   
+   
+   # Use the environment variables input below to pass secret variables to this script.
+  workingDirectory: test
+
+  displayName: 'Nunit console Runner 3.9.0'
+
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+
+    platform: '$(BuildPlatform)'
+
+    configuration: '$(BuildConfiguration)'
+
+    rerunFailedTests: false
+
+  enabled: false
+  continueOnError: true
+  condition: succeededOrFailed()
+  timeoutInMinutes: 40
+
+- task: mmajcica.SpecFlowReportGenerator.SpecFlowReportGeneratorTask.SpecFlowReportGenerator@1
+  displayName: 'Generate SpecFlow Report'
+  inputs:
+    projectFile: test/Tbg.TM.Automation.Web.Test/Tbg.TM.Automation.Web.Test.csproj
+
+    testResult: '$(build.sourcesDirectory)\**\*.trx'
+
+    out: '$(build.stagingDirectory)\TransfermateAutomationReport.html'
+
+  enabled: false
+  condition: always()
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFormat: NUnit
+
+    testResultsFiles: '$(Build.SourcesDirectory)\test\Tbg.TM.Automation.Web.Test\TestResult\test-result.xml'
+
+  condition: always()
+
+- task: mmajcica.PicklesGenerator.PicklesGeneratorTask.Pickles@1
+  displayName: 'Generate Pickles documentation'
+  inputs:
+    featureDir: test/Tbg.TM.Automation.Web.Test/Features
+
+    docFormat: DHtml
+
+    out: '$(build.stagingDirectory)'
+
+    sutn: TransferMate
+
+    sutv: 0.0
+
+    resultsFile: '$(build.SourcesDirectory)\test\Tbg.TM.Automation.Web.Test\TestResult\test-result.xml'
+
+    resultsFormat: NUnit3
+
+  condition: always()
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+
+    SymbolServerType: TeamServices
+
+  continueOnError: true
+  condition: always()
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
+    ArtifactName: '$(Parameters.ArtifactName)'
+
+  condition: always()
+

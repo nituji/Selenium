@@ -1,0 +1,32 @@
+package interviewpackage;
+
+public class First10Armstrong {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int count=0;
+		int i;
+		
+		int rem;
+		for(i=0;count<=2;i++)
+		{   int temp=i; int arms=0;
+			while(i>=0) {
+			rem=temp%10;
+			arms+=rem*rem*rem;
+			temp=temp/10;
+			}
+			
+			if(i==arms) 
+			{
+				System.out.println(i);
+				count++;
+				
+			}
+		
+			
+		
+		}
+
+	}
+
+}

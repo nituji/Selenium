@@ -1,0 +1,187 @@
+package Supervisionbookingwep;
+
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+
+public class Suploginpage {
+	
+WebDriver driver;
+	
+	@FindBy(xpath=".//*[@id='username']")
+	WebElement Username;
+	
+	@FindBy(id="password")
+	WebElement PWD;
+	
+	@FindBy(xpath=".//*[@id='form_login']/div[3]/button")
+	WebElement Loginbutton;
+	
+	@FindBy(xpath="//ul[@id='main-menu']/li[3]/a/span[contains(text(),'Admin Management')]")
+	WebElement admin_Management;
+	
+	@FindBy(xpath="//ul[@id='main-menu']/li[10]/a/span[contains(text(),'Markup Management')]")
+	WebElement Markup_Management;
+	
+	@FindBy(xpath=".//*[@id='main-menu']/li[10]/ul/li[1]/a/span[contains(text(),'Markup List')]")
+	WebElement Markup_list;
+	
+	@FindBy(xpath="//a [@href='https://bookingwep.com/admin_cpanel/markup/add_markup'][contains(text(),'Add New Markup')]")
+	WebElement Add_newmarkup;
+	
+	@FindBy(xpath=".//*[@id='s2id_autogen1']/a/span[1]")
+	WebElement UserType;
+	
+	@FindBy(xpath=".//*[@id='select2-drop']/ul/li[1]/div")
+	WebElement UT_B2c;
+	
+	@FindBy(xpath=".//*[@id='s2id_product']/a/span[1]")
+	WebElement productlist;
+	
+	@FindBy(xpath=".//*[@id='select2-drop']/ul/li[2]/div")
+	WebElement pl_flight;
+	
+	@FindBy(xpath=".//*[@id='s2id_autogen8']/a/span[1]")
+	WebElement Api;
+	
+	@FindBy(xpath=".//*[@id='select2-drop']/ul/li[2]/div")
+	WebElement Ap_travelport;
+	
+	@FindBy(xpath=".//*[@id='s2id_markup_type']/a/span[1]")
+	WebElement Mrtyp;
+	
+	@FindBy(xpath=".//*[@id='select2-drop']/ul/li[2]/div")
+	WebElement Mrtype_General;
+	
+	@FindBy(xpath=".//*[@id='s2id_autogen15']/a/span[1]")
+	WebElement Marktypeper;
+	
+	@FindBy(xpath=".//*[@id='select2-drop']/ul/li[2]/div")
+	WebElement Marktypeper_fixed;
+	@FindBy(xpath=".//*[@id='field-mf']")
+	WebElement MarkValuePer;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Suploginpage(WebDriver driver) 
+	{
+		
+		 this.driver=driver;
+
+		    PageFactory.initElements(driver, this);
+		   
+	}
+	
+	public void Login() throws InterruptedException
+	{
+	    Username.sendKeys("info@bookingwep.com");
+        PWD.sendKeys("admin");
+		Loginbutton.click();
+		/*if(driver.getPageSource().contains("Text - Booking Details"))
+		{
+		System.out.println("Text is Present");
+		}
+		else
+		{
+		System.out.println("Text is not Present");
+		}*/
+
+	    Assert.assertEquals("August 2018", "August 2018");
+		System.out.println("Text present");
+	}
+	
+public void B2cmarkup() throws InterruptedException
+    {
+	driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
+	
+	WebElement element= driver.findElement(By.xpath("//ul[@id='main-menu']/li[10]/a/span[contains(text(),'Markup Management')]"));
+	
+	Actions actions = new Actions(driver);
+
+	actions.moveToElement(element).click().perform();
+	Thread.sleep(1000);
+	Markup_list.click();
+	Thread.sleep(1000);
+	Add_newmarkup.click();
+	Thread.sleep(1000);
+	UserType.click();
+	Thread.sleep(1000);
+	UT_B2c.click();
+	Thread.sleep(1000);
+	productlist.click();
+	Thread.sleep(2000);
+	pl_flight.click();
+	Thread.sleep(1000);
+	Api.click();
+	Thread.sleep(1000);
+	Ap_travelport.click();
+	Thread.sleep(1000);
+	Mrtyp.click();
+	Thread.sleep(1000);
+	Mrtype_General.click();
+	Thread.sleep(1000);
+	Marktypeper.click();
+	Thread.sleep(1000);
+	Marktypeper_fixed.click();
+	Thread.sleep(1000);
+	MarkValuePer.sendKeys("10");
+    }	
+}
+//public void menulist() throws InterruptedException{
+
+		//driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
+	// driver.findElement(By.xpath("@id='main-menu']")).click();
+	 
+	 
+	 
+   // adding 2 seconds wait to avoid Sync issue
+	 //Thread.sleep(3000);
+
+
+	
+	 //WebDriverWait wait = new WebDriverWait(driver, 30);
+	// wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("//ul[@id='main-menu']/li[3]/a/span[contains(text(),'Admin Management')]")));
+ //  admin_Management.click();
+
+
+
+   // Dropdown items are coming in <a> tag so below xpath will get all
+
+   // elements and findElements will return list of WebElements
+
+   
+		
+		
+	//}
+	//Perform on menu after right click on report if we want to open same page.
+/*WebElement elementq =driver.findElement(By.xpath("//span[contains(text(),'Reports ')]")); 	
+Actions builderq = new Actions(driver); 		
+Thread.sleep(3000);	
+builderq.contextClick(elementq).build().perform();		 
+Robot robot = new Robot();		 
+robot.keyPress(KeyEvent.VK_DOWN);		 
+robot.keyRelease(KeyEvent.VK_DOWN);		
+robot.keyPress(KeyEvent.VK_ENTER);//working
+	
+*/

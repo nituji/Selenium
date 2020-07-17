@@ -1,0 +1,99 @@
+package Supervisionbookingwep;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+public class Suploginpage {
+	WebDriver driver;
+	
+	@FindBy(id="username")
+	WebElement UN;
+	
+	@FindBy(id="password")
+	WebElement PWD;
+	@FindBy(xpath=".//*[@id='form_login']/div[3]/button")
+	WebElement Loginbutton;
+	@FindBy(xpath="//ul[@id='main-menu']/li[3]/a/span[contains(text(),'Admin Management')]")
+	WebElement admin_Management;
+	
+	
+
+	
+	public Suploginpage(WebDriver drive, WebDriver driver) {
+		
+		 this.driver=driver;
+
+		    PageFactory.initElements(driver, this);
+		   
+		    	}
+	
+	public void Suplogin(){
+		UN.sendKeys("info@bookingwep.com");
+		PWD.sendKeys("admin");
+		Loginbutton.click();
+		
+		/*if(driver.getPageSource().contains("Text - Booking Details"))
+		{
+		System.out.println("Text is Present");
+		}
+		else
+		{
+		System.out.println("Text is not Present");
+		}*/
+
+	
+		Assert.assertEquals("August 2018", "August 2018");
+		System.out.println("Text present");
+		
+	
+		
+	}
+	
+	 
+ public void menulist() throws InterruptedException{
+	 
+		driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
+	// driver.findElement(By.xpath("@id='main-menu']")).click();
+	 
+	 
+	 
+     // adding 2 seconds wait to avoid Sync issue
+	 //Thread.sleep(3000);
+
+
+	
+	 //WebDriverWait wait = new WebDriverWait(driver, 30);
+	// wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("//ul[@id='main-menu']/li[3]/a/span[contains(text(),'Admin Management')]")));
+     admin_Management.click();
+
+
+
+     // Dropdown items are coming in <a> tag so below xpath will get all
+
+     // elements and findElements will return list of WebElements
+
+     
+		// TODO Auto-generated method stub
+		
+	}
+	//Perform on menu after right click on report if we want to open same page.
+/*WebElement elementq =driver.findElement(By.xpath("//span[contains(text(),'Reports ')]")); 	
+Actions builderq = new Actions(driver); 		
+Thread.sleep(3000);	
+builderq.contextClick(elementq).build().perform();		 
+Robot robot = new Robot();		 
+robot.keyPress(KeyEvent.VK_DOWN);		 
+robot.keyRelease(KeyEvent.VK_DOWN);		
+robot.keyPress(KeyEvent.VK_ENTER);//working
+	
+*/
+ }

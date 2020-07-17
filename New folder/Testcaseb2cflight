@@ -1,0 +1,68 @@
+public class Testcaseb2cflight {
+	
+	WebDriver driver;
+	Loginb2c LB2C;
+	B2cflightresult B2CFR;
+   Travellerspageflight TPF;
+
+
+	
+	@BeforeTest
+	public void launchtest() throws InterruptedException
+	{
+
+		     System.setProperty("webdriver.chrome.driver","D:\\eclipse\\jar\\chromedriver.exe");
+		     
+		     
+		     //Logger logger=Logger.getLogger("Google");
+		        
+		     
+		       // configure log4j properties file
+		      // PropertyConfigurator.configure("Log4j.properties");
+		 
+			
+			 driver=new ChromeDriver();
+			 driver.get("http://192.168.0.140/bookingwep/en/");				
+			 driver.manage().window().maximize();
+			// hptest = PageFactory.initElements(driver, Homepagetestcase.class);
+			  //Webelemnt = PageFactory.initElements(driver, Webelementall.class);
+     }	
+	
+	
+	
+	@Test
+	public void Login() throws InterruptedException, IOException{
+	
+		
+		Loginb2c LB2C = new Loginb2c(driver);
+		 //B2CL.B2csignup();
+		 
+		LB2C.B2csignin();
+		
+		//LB2C.B2clogout();
+		//LB2C.Updateprofilepic();
+		LB2C.Oneway();
+		B2cflightresult B2CFR = new B2cflightresult(driver);
+		Generic g1=new Generic();
+		//B2CFR.Stops();
+		//String price= B2CFR.Flightdetails();
+       	
+		B2CFR.Flightdetails();
+		String[] str= B2CFR.Flightdetails();
+
+				for( int i=1;i<=14;i++)
+				{
+				setdata("Book1",i,1,str[i])
+		
+	
+		 
+		  // Travellerspageflight TPF = new Travellerspageflight(driver);
+		   //TPF.Traveller_Details();
+		   //TPF.Logout();
+				
+	}
+	
+	
+}
+
+

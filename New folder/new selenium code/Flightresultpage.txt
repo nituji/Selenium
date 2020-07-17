@@ -1,0 +1,217 @@
+package packageallpageflight;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.bouncycastle.util.Strings;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import de.bezier.data.XlsReader;
+import package3.Generic;
+
+public class Flightresutpage {
+	
+	WebDriver driver;
+
+	Generic GEN;
+	
+	
+	//@FindBy(xpath=".//*[@id='airlines_stop']/ul/li[1]/div/label")
+		@FindBy(xpath=".//input[@id='squaredThrees0']")
+		WebElement Stops0;
+		
+		@FindBy(xpath=".//*[@id='airlines_stop']/ul/li[2]/div/label")
+		WebElement Stops1;
+		
+		@FindBy(xpath=".//*[@id='airlines_stop']/ul/li[3]/div/label")
+		WebElement Stops2;
+		
+		@FindBy(id="total_records")
+		WebElement Totalrecord;
+		
+		@FindBy(xpath=".//*[@id='chk_0']")
+		WebElement Flight_Details;
+		
+		@FindBy(xpath=".//*[@id='maincontent']/li[2]/a")
+		WebElement Baggate_Tab;
+		@FindBy(xpath=".//*[@id='maincontent']/li[1]/a")
+		WebElement Itinerary1;
+		@FindBy(xpath=".//*[@id='flight_res']/div/div/div[1]/button")
+		WebElement Flightdetails_Close;
+		@FindBy(xpath=".//*[@id='book_chk_1']")
+		WebElement Book_Button;
+		
+		
+		
+		@FindBy(xpath="//div [@class='drghead']")
+		WebElement Airline_number;	
+		
+		public Flightresutpage(WebDriver driver)	
+			
+		{			
+		this.driver=driver;			
+		 PageFactory.initElements(driver, this);
+	}
+		//---Stops filters------------------------------------------
+	public void Stops() throws InterruptedException{
+		//Thread.sleep(3000);
+		//WebElement element = driver.findElement(By.xpath(".//*[@id='airlines_stop']/ul/li[1]/div/label"));
+	   /* WebDriverWait wait = new WebDriverWait(driver, 5000);
+	   wait.until(ExpectedConditions.elementToBeClickable(Stops0));
+
+	   Stops0.click();
+	   Thread.sleep(3000);
+	    
+	   // System.out.print(Totalrecord);*/
+		
+		//WebDriverWait wait = new WebDriverWait(driver, 90);
+		  // wait.until(ExpectedConditions.visibilityOf(Stops0));
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+		   //	if(Stops0.isSelected())
+		//{
+		//    System.out.println("Selected");
+		    
+	    Stops0.click();
+		}
+		
+		//Actions act= new Actions(driver);
+		//act.moveToElement(Stops0).click().build().perform();
+	// }
+		
+		//----------------------------------------------------------------------------------------
+	public void Flightdetails() throws InterruptedException, IOException{
+			Thread.sleep(5000);
+			List<WebElement> allprices=driver.findElements(By.xpath("//h4 [@class='f_prc']"));
+			
+			int len=allprices.size();
+
+		//Xls_Reader reader=new Xls_Reader("C:\\Users\\ajitesh.raj\\Desktop\\selenium\\Bookingwep\\Data\\Exdata.xlsx");	
+			
+		
+			
+			
+			
+			
+			
+			System.out.println(len);
+			
+			for(int i=0;i<len;i++)
+			{
+				System.out.println(allprices.get(i).getText());
+				
+		
+	}}
+				
+			public void flightnamecount() throws InterruptedException {	
+				Thread.sleep(5000);
+				
+				List<WebElement> allflights=driver.findElements(By.xpath("//div [@class='fare_details']"));
+				
+				int lntth1=allflights.size();
+				System.out.println(lntth1);
+				
+				for(int i=0;i<lntth1;i++)
+				{
+					System.out.println(allflights.get(i).getText());
+					
+				
+				
+				//setdata("Book1",i,1,allprices);
+	
+			}
+			
+		//JavascriptExecutor jse = (JavascriptExecutor)driver;
+		 //jse.executeScript("scroll(0, 250)");	   
+		//driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);   	   	  
+		//String flight_price= price.getText();
+		//String price= "//*[@id='result']/div[1]/div[5]/div/h4";
+		//for(int i=1;i<=7;i++){
+		//System.out.println(flight_price);		
+			
+		//}
+		//System.out.println(flight_price);
+		 //Flight_Details.click();
+		// Thread.sleep(3000);
+		// String Airlinenumber=Airline_number.getText();
+		// System.out.println(Airlinenumber);
+		//Baggate_Tab.click();
+		//File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	     //FileUtils.copyFile(scrFile, new File("E:\\screenshot\\failed-test.png"));
+		//to verify the flight detaiils page has been displayed.
+		
+		//String winHandleBefore = driver.getWindowHandle();
+		//for(String winHandle : driver.getWindowHandles()){
+		   // driver.switchTo().window(winHandle);
+		
+		if(driver.getPageSource().contains("10-Jan-2019"))
+		{
+	System.out.println("Name is Present");
+	}
+	else
+		{
+		System.out.println("Name is not Present");
+	} }/* verification 1 */
+	
+	public void wndhndl() throws InterruptedException {
+		
+		String parent_window=driver.getWindowHandle();
+	    System.out.println("Before switching title is "+parent_window);
+	   Set<String> s1=driver.getWindowHandles();
+	   Iterator<String> i1=s1.iterator();
+		while(i1.hasNext())
+		{
+		String child_window=i1.next();
+		if(!parent_window.equalsIgnoreCase(child_window))
+		{
+			driver.switchTo().window(child_window);
+			Thread.sleep(10000);
+			System.out.println("After switching title is"+driver.getTitle());
+		}
+			
+			
+		}
+		
+		driver.switchTo().window(parent_window);
+		System.out.println("Back to the parent window"+driver.getTitle());
+		}
+		
+		
+		
+	  public void refrsh() {
+		  driver.navigate().refresh();
+		  System.out.println("page has been refreshed");
+		  
+		  
+		  
+	  }      
+		
+		
+		//Flightdetails_Close.click();
+		//Thread.sleep(5000);
+		
+		//Book_Button.click();
+		
+	}
+
+	
+
+
+
+
+

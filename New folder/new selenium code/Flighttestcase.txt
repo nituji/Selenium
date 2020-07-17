@@ -1,0 +1,105 @@
+package bookingwepalltestcase;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Supervisionbookingwep.Supervisionlounch;
+import Supervisionbookingwep.Suploginpage;
+import package3.Generic;
+import packageallpageflight.Flightresutpage;
+import packageallpageflight.loginpage;
+
+public class Flighttestcase {
+	
+	WebDriver driver;
+	loginpage LB2C;
+	Flightresutpage B2CFR;
+	Suploginpage SL;
+	
+	Supervisionlounch SLT;
+  // Travellerspageflight TPF;
+
+
+	
+	@BeforeTest
+	public void launchtest() throws InterruptedException
+	{
+
+		String exePath = "C:\\Users\\ajitesh.raj\\Desktop\\selenium\\chromedriver_win32\\chromedriver.exe";
+		System.setProperty("webdriver.chrome.driver", exePath);
+		     
+		     //Logger logger=Logger.getLogger("Google");
+		        
+		     
+		       // configure log4j properties file
+		      // PropertyConfigurator.configure("Log4j.properties");
+		 
+			
+			 driver=new ChromeDriver();
+			 driver.get("https://bookingwep.com/en");				
+			 driver.manage().window().maximize();
+			// hptest = PageFactory.initElements(driver, Homepagetestcase.class);
+			  //Webelemnt = PageFactory.initElements(driver, Webelementall.class);
+     }	
+	
+	
+	
+	@Test
+	public void Login() throws InterruptedException, IOException{
+	
+		
+		loginpage LB2C = new loginpage(driver);
+		 //B2CL.B2csignup();
+		 
+		LB2C.B2csignin();
+		
+		//LB2C.B2clogout();
+		//LB2C.Updateprofilepic();
+		LB2C.Oneway();
+		Flightresutpage B2CFR = new Flightresutpage(driver);
+		
+		B2CFR.flightnamecount();
+		B2CFR.Flightdetails();
+		
+		//Generic g1=new Generic();
+		//B2CFR.Stops();
+		//String price= B2CFR.Flightdetails();
+       	
+		
+		
+		//String [] str=B2CFR.printinexcl();
+
+				//for( int i=1;i<=14;i++)
+				//{
+				//setdata("Book1",i,1,str[i])
+		
+	
+		 
+		  // Travellerspageflight TPF = new Travellerspageflight(driver);
+		   //TPF.Traveller_Details();
+		   //TPF.Logout();
+		
+		//shifted to supervision
+		Supervisionlounch SLT =new 	Supervisionlounch();
+		
+		SLT.launchtest();
+		SLT.Signin();
+		
+		B2CFR.wndhndl();
+		B2CFR.refrsh();
+		
+				
+	}
+	
+	
+}
+
+
+
+

@@ -1,0 +1,258 @@
+package packageallpageflight;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+public class loginpage {
+	
+WebDriver driver;
+	
+	
+	//public  Loginb2c(){
+		
+		
+		// TODO Auto-generated constructor stub
+			//}
+	
+	
+	//signup
+	//@FindBy(xpath="//a [@class='fadeandscale_close fadeandscalereg_open']")
+	//WebElement Signup;
+	//@FindBy(xpath=".//*[@id='registration']/div[2]/div[1]/input")
+	//WebElement Firstname;
+	//----------------------------------------------------------------------------------
+	//Sign in
+	@FindBy(xpath="//ul /li[contains(a,' MY ACCOUNT')]")
+	public
+	WebElement Myaccount;  
+
+
+	@FindBy(xpath=".//*[@id='login']/div[3]/div[1]/input")
+	public
+	WebElement Username;
+	@FindBy(xpath=".//*[@id='pswd']")
+	public
+	WebElement Password;
+	@FindBy(xpath="	.//*[@id='login']/div[3]/button")
+	public
+	WebElement Login;
+	
+	//Signout
+	@FindBy(xpath=".//*[@id='navbar-collapse-1']/div/div/div/ul/li[6]/a")
+	WebElement Click_Welcome_to_nitu;
+	
+	
+	//---------------------------------------------------------------------------
+	//Update profilepic
+	@FindBy(xpath="//a [@class='dropdown-toggle']")
+	WebElement Welcometonitu;
+	@FindBy(xpath="//a [@href='http://192.168.0.140/bookingwep/en/dashboard_b2c']")
+	WebElement Mydadhboard;
+	@FindBy(xpath="html/body/div[8]/div/div/div[1]/div/a/img")
+	WebElement Clicklogo;
+	
+	//-----------------------------------------------------------------------------------
+	//ONEWAY FLIGHT
+	//----------------------
+	@FindBy(xpath=".//*[@id='flight_form']/div[1]/div/label[1]")
+	WebElement Onewaytab;
+	@FindBy(id="from_city")
+	WebElement From;
+	@FindBy(xpath="//ul[@id='ui-id-1']/li")
+	WebElement City_list;
+	@FindBy(id="to_city")
+	WebElement To;
+	@FindBy(xpath="//ul[@id='ui-id-2']/li[1]")
+	WebElement To_citylist;
+	@FindBy(id="fcheckin")
+	WebElement Departuretime;
+	@FindBy(id="fcheckout")
+	WebElement Arrival;
+	@FindBy(xpath="//div [@class='totlall']")
+	WebElement travellers;
+	@FindBy(xpath=".//*[@id='flight_form']/div[2]/div[3]/button")
+	WebElement Searchbutton;
+	@FindBy(xpath=".//label [contains(text(),'0 Stops')]")
+	WebElement stops0;
+	@FindBy(xpath=".//*[@id='modhtl']")
+	WebElement ModifyFlight;
+	//-----perform action on modify------
+	@FindBy(id="from_city")
+	WebElement From1;
+	@FindBy(xpath="//ul[@id='ui-id-1']/li")
+	WebElement City_list1;
+	@FindBy(id="to_city")
+	WebElement To1;
+	@FindBy(xpath="//ul[@id='ui-id-2']/li[1]")
+	WebElement To_citylist1;
+	@FindBy(id="fcheckin")
+	WebElement Departuretime1;
+	@FindBy(id="fcheckout")
+	WebElement Arrival1;
+	@FindBy(xpath="//div [@class='totlall']")
+	WebElement travellers1;
+	@FindBy(xpath=".//*[@id='flight_form']/div[2]/div[3]/button")
+	WebElement Searchbutton1;
+	
+
+	
+
+		// TODO Auto-generated constructor stub
+	
+	
+	public loginpage(WebDriver driver)		
+	{			
+	this.driver=driver;	
+	// to initialize element in pom
+	 PageFactory.initElements(driver, this);
+
+	}	
+	
+	
+	public void B2csignin() throws InterruptedException, IOException{
+		
+     Myaccount.click();
+	 Thread.sleep(1000);
+	 Username.sendKeys("nitu.provab@gmail.com");
+     Password.sendKeys("nitu@1234");
+     Login.click();	 
+     //Click_Welcome_to_nitu.click();
+     }
+	
+	//public void B2clogout(){
+		
+		//Click_Welcome_to_nitu.click();
+		
+		
+		
+	//}
+             //For taking screenshot.
+            // File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            // FileUtils.copyFile(scrFile, new File("E:\\screenshot\\failed-test.png"));
+            //(We have to give drive name , foldername and screenshotname(E:\\screenshot\\failed-test.png)
+         
+         
+	
+	public void Updateprofilepic() throws InterruptedException{
+	Thread.sleep(3000);
+		
+	Welcometonitu.click();
+	Mydadhboard.click();
+		     //Find the element of upload button and send the path
+		     //htmlcode <input type="file" value="uploadphoto" id="profilePhoto" name="profilePhoto" class="rschange">
+		     //using sendkeys
+	WebElement element= driver.findElement(By.name("profilePhoto"));
+	element.sendKeys("F:\\picture\\flightimg.jpg");
+		      // Switching to Alert        
+		
+		      //The code has to wait for alert. Below is the sample code(Profile Picture Changed Successfully click on ok button)
+		
+	try {
+     WebDriverWait wait = new WebDriverWait(driver, 2);
+     wait.until(ExpectedConditions.alertIsPresent());
+     Alert alert = driver.switchTo().alert();
+	 System.out.println(alert.getText());
+	 alert.accept();
+	 Assert.assertTrue(alert.getText().contains("Thanks."));
+		} 
+	catch (Exception e) {
+		        //exception handling
+	Clicklogo.click();
+			
+			}
+		}
+
+    public void Oneway() throws InterruptedException{
+    	try {
+	 Onewaytab.click();
+    	}
+    	catch(org.openqa.selenium.StaleElementReferenceException ex)
+    	{
+      Onewaytab.click();
+    	}
+	 Thread.sleep(3000);
+	 From.sendKeys("KWI");
+	 Thread.sleep(3000);
+	 City_list.click();
+	 To.sendKeys("DXB");
+	 Thread.sleep(3000);
+	 To_citylist.click();
+	
+                   //Departure date  	
+   ((JavascriptExecutor)driver).executeScript("document.getElementById('fcheckin').removeAttribute('readonly',0);"); 
+
+	Thread.sleep(3000);
+	Departuretime.click();
+	Thread.sleep(3000);
+	Departuretime.clear();
+	Thread.sleep(3000);
+	Departuretime.sendKeys("3-03-2019");
+	Thread.sleep(3000);
+	 Onewaytab.click();
+	
+                     //Returndate(we need to pass id not weblement)   	
+	
+   /*((JavascriptExecutor)driver).executeScript("document.getElementById('fcheckout').removeAttribute('readonly',0);"); 
+	
+	Thread.sleep(3000);
+	Arrival.click();
+	Arrival.clear();
+	Arrival.sendKeys("24-12-2018");*/
+	
+                        //Click on travellers
+	Thread.sleep(5000);
+	travellers.click();
+                        //Select class	
+	Select stat=new Select(driver.findElement(By.id("input")));
+   stat.selectByValue("Economy");
+   //Thread.sleep(3000);
+                         //Click on search button
+   Searchbutton.click();
+   
+   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+  
+   
+                          //Modify oneway
+   /*JavascriptExecutor jse = (JavascriptExecutor)driver;
+   
+   jse.executeScript("scroll(0, -400)");
+   Thread.sleep(1000);
+   ModifyFlight.click();
+   Thread.sleep(5000);
+   WebElement ModifyFlight=driver.findElement(By.xpath(".//*[@id='modhtl']"));
+   Actions act1= new Actions(driver);
+   act1.moveToElement(ModifyFlight).click().build().perform();
+   Thread.sleep(5000);
+   From1.clear();
+   Thread.sleep(3000);
+	 From1.sendKeys("DXB");
+	 Thread.sleep(3000);
+	 City_list1.click();
+	 To.sendKeys("GOI");
+	 Thread.sleep(3000);
+	 To_citylist1.click();*/
+   
+   
+	
+
+   
+   
+
+  
+	
+	
+}}
+
+

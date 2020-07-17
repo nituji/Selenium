@@ -1,0 +1,44 @@
+driver.findElement(By.id("advs-title")).sendKeys("Marketing");
+    driver.findElement(By.name("submit")).click();
+    Thread.sleep(1000);
+    String name, designation;
+
+    for(int i = 0; i < 3; i++) {
+        int j = i + 1 ;
+        name = driver.findElement(By.xpath(".//*[@id='results']/li["+j+"]/div/h3/a")).getText();
+        System.out.println("data1 = " +  name);
+        designation = driver.findElement(By.xpath(".//*[@id='results']/li["+j+"]/div/p")).getText();
+        System.out.println("data2 = " +  designation);
+
+        File fExcel = new File("C:\\Users\\Master\\Desktop\\new.xls");
+        WritableWorkbook writableBook = Workbook.createWorkbook(fExcel); 
+        writableBook.createSheet("Data", 0);
+
+        WritableSheet writableSheet = writableBook.getSheet(0);
+
+        Label data1 = new Label(j, 1, name);
+        writableSheet.addCell(data1);
+
+        Label data2 = new Label(j, 1, designation);
+        writableSheet.addCell(data2);
+
+        writableBook.write();
+        writableBook.close();               
+    }
+}
+
+
+
+
+
+
+
+
+
+
+http://www.helloselenium.com/2014/09/how-to-save-test-results-in-excel-file.html
+
+https://www.techbeamers.com/save-selenium-webdriver-testng-result-excel/#h3
+https://youtu.be/icr_JX5YIDU-excel
+
+https://youtu.be/Kt80AgufMIA-Selenium : Generate Report in Excel Format
